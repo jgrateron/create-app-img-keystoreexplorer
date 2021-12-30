@@ -17,13 +17,14 @@ DIRWORKAPPIMG=$DIRWORK/$DIRAPPIMG
 rm -rf $DIRWORKAPPIMG
 mkdir -p $DIRWORKAPPIMG 
 
+KSEVERSION=kse-5.5.0
 #download java 11 if not exists
 
-DIRJAVA=jdk-11.0.11+9
+DIRJAVA=jdk-11.0.13+8
 
 if [ ! -d $DIRJAVA ]; then
-    wget https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.11%2B9/OpenJDK11U-jdk_x64_linux_hotspot_11.0.11_9.tar.gz
-    tar xvfz OpenJDK11U-jdk_x64_linux_hotspot_11.0.11_9.tar.gz
+    wget https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.13%2B8/OpenJDK11U-jdk_x64_linux_hotspot_11.0.13_8.tar.gz
+    tar xvfz OpenJDK11U-jdk_x64_linux_hotspot_11.0.13_8.tar.gz
 fi
 
 export JAVA_HOME=$DIRWORK/$DIRJAVA
@@ -43,24 +44,26 @@ cd kse
 
 ./gradlew clean build
 
-if [ ! -e build/distributions/kse-5.4.4.zip ]; then
+if [ ! -e build/distributions/$KSEVERSION.zip ]; then
     echo "build failed"
     exit -1
 fi
+
 cp res/kse.desktop $DIRWORKAPPIMG
-cp res/icons/kse.png $DIRWORKAPPIMG
-cp build/distributions/kse-5.4.4.zip $DIRWORKAPPIMG
+cp res/splash.png $DIRWORKAPPIMG
+cp icons/kse.png $DIRWORKAPPIMG
+cp build/distributions/$KSEVERSION.zip $DIRWORKAPPIMG
 
 cd $DIRWORK
 
 #download jre 11 if not exist
 
-DIRJRE=jdk-11.0.11+9-jre
-if [ ! -d $DIRJRE ]; then
-    wget https://github.com/AdoptOpenJDK/openjdk11-binaries/releases/download/jdk-11.0.11%2B9/OpenJDK11U-jre_x64_linux_hotspot_11.0.11_9.tar.gz
+DIRJRE=jdk-11.0.13+8-jre
+if [ ! -e OpenJDK11U-jre_x64_linux_hotspot_11.0.13_8.tar.gz ]; then
+    wget https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.13%2B8/OpenJDK11U-jre_x64_linux_hotspot_11.0.13_8.tar.gz
 fi
 
-tar xvfz OpenJDK11U-jre_x64_linux_hotspot_11.0.11_9.tar.gz
+tar xvfz OpenJDK11U-jre_x64_linux_hotspot_11.0.13_8.tar.gz
 
 mv $DIRJRE $DIRWORKAPPIMG/jre
 
@@ -68,14 +71,14 @@ cd $DIRWORKAPPIMG
 
 mkdir -p lib
 
-unzip kse-5.4.4.zip
+unzip $KSEVERSION.zip
 
-cp kse-5.4.4/lib/* lib
+cp $KSEVERSION/lib/* lib
 
-mv lib/kse-5.4.4.jar kse.jar
+mv lib/kse.jar kse.jar
 
-rm -rf kse-5.4.4
-rm -f kse-5.4.4.zip
+rm -rf $KSEVERSION
+rm -f $KSEVERSION.zip
 
 #download tool app img
 

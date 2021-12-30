@@ -7,10 +7,11 @@ SCRIPT_DIR=$(dirname $0)
 cd $SCRIPT_DIR
 SCRIPT_DIR=$(pwd)
 JAR_FILE="${SCRIPT_DIR}/kse.jar"
+JAVA_OPTIONS="-splash:${SCRIPT_DIR}/splash.png"
 
 if [ -d "${SCRIPT_DIR}/jre" ]; then
     export LD_LIBRARY_PATH=${SCRIPT_DIR}/jre/lib:$LD_LIBRARY_PATH
-    "${SCRIPT_DIR}/jre/bin/java" -jar "${JAR_FILE}" "$@"
+    "${SCRIPT_DIR}/jre/bin/java" ${JAVA_OPTIONS} -jar "${JAR_FILE}" "$@"
 else
-    java -jar "${JAR_FILE}" "$@"
+    java ${JAVA_OPTIONS} -jar "${JAR_FILE}" "$@"
 fi
