@@ -17,14 +17,14 @@ DIRWORKAPPIMG=$DIRWORK/$DIRAPPIMG
 rm -rf $DIRWORKAPPIMG
 mkdir -p $DIRWORKAPPIMG 
 
-KSEVERSION=kse-5.5.0
+KSEVERSION=kse-5.5.3
 #download java 11 if not exists
 
-DIRJAVA=jdk-11.0.13+8
+DIRJAVA=jdk-11.0.23+9
 
 if [ ! -d $DIRJAVA ]; then
-    wget https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.13%2B8/OpenJDK11U-jdk_x64_linux_hotspot_11.0.13_8.tar.gz
-    tar xvfz OpenJDK11U-jdk_x64_linux_hotspot_11.0.13_8.tar.gz
+    wget https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.23%2B9/OpenJDK11U-jdk_x64_linux_hotspot_11.0.23_9.tar.gz
+    tar xvfz OpenJDK11U-jdk_x64_linux_hotspot_11.0.23_9.tar.gz
 fi
 
 export JAVA_HOME=$DIRWORK/$DIRJAVA
@@ -58,12 +58,12 @@ cd $DIRWORK
 
 #download jre 11 if not exist
 
-DIRJRE=jdk-11.0.13+8-jre
+DIRJRE=jdk-11.0.23+9-jre
 if [ ! -e OpenJDK11U-jre_x64_linux_hotspot_11.0.13_8.tar.gz ]; then
-    wget https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.13%2B8/OpenJDK11U-jre_x64_linux_hotspot_11.0.13_8.tar.gz
+    wget https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.23%2B9/OpenJDK11U-jre_x64_linux_hotspot_11.0.23_9.tar.gz
 fi
 
-tar xvfz OpenJDK11U-jre_x64_linux_hotspot_11.0.13_8.tar.gz
+tar xvfz OpenJDK11U-jre_x64_linux_hotspot_11.0.23_9.tar.gz
 
 mv $DIRJRE $DIRWORKAPPIMG/jre
 
